@@ -18,6 +18,13 @@ class ChannelControllerTest extends TestCase
     }
 
 
+    public function test_creating_channel_should_be_validated()
+    {
+        $response = $this->postJson(route('channel.create'));
+        $response->assertStatus(422);
+    }
+
+
     public function test_create_channel()
     {
         $response = $this->postJson(route('channel.create'), [
@@ -27,9 +34,24 @@ class ChannelControllerTest extends TestCase
     }
 
 
-    public function test_creating_channel_should_be_validated()
+    public function test_updating_channel_should_be_validated()
     {
-        $response = $this->postJson(route('channel.create'));
+        $response = $this->json('PUT', route('channel.update'));
         $response->assertStatus(422);
+    }
+
+
+    public function test_update_channel()
+    {
+        $channel = Channel::factory()->create([
+            'name' => 'laravel'
+        ]);
+        $response = $this->json('PUT', route('channel.update'), [
+            'id' =>$channel->id,
+            'name'=>'vuejs'
+        ]);
+        $response->assertStatus(200);
+        $updateChannel = Channel::find($channel->id);
+        $this->assertEquals('vuejs' ,  $updateChannel->name);
     }
 }

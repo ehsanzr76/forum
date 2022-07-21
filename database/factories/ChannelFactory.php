@@ -14,10 +14,11 @@ class ChannelFactory extends Factory
      * Define the model's default state.
      *
      * @return array<string, mixed>
+     *
      */
     public function definition()
     {
-        $name = $this->faker->name();
+        $name = $this->faker->sentence(4);
         return [
            'name'=> $name,
             'slug'=>str::slug($name)

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -24,7 +25,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'user create successfully'
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 
 
@@ -49,13 +50,13 @@ class AuthController extends Controller
         Auth::logout();
         return response()->json([
             'message' => 'logged out successfully'
-        ], 200);
+        ], Response::HTTP_OK);
     }
 
 
     public function user()
     {
-        return response()->json(Auth::User() , 200);
+        return response()->json(Auth::User() , Response::HTTP_OK);
     }
 
 

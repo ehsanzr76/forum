@@ -29,8 +29,9 @@ Route::prefix('/v1')->group(function () {
     });
 
     Route::prefix('/channel')->controller(ChannelController::class)->group(function () {
-        Route::get('/channels', 'getAllChannels')->name('channel.index');
-        Route::post('/save/channel', 'createNewChannel')->name('channel.create');
+        Route::get('/index', 'getAllChannels')->name('channel.index');
+        Route::post('/create', 'createNewChannel')->name('channel.create');
+        Route::put('/update', 'updateChannel')->name('channel.update');
     });
 });
 
