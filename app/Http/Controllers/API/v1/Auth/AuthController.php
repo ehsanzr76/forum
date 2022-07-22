@@ -1,27 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Api\V01\Auth;
+namespace App\Http\Controllers\API\v1\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Http\Requests\API\v1\Auth\LoginAuthRequest;
+use App\Http\Requests\API\v1\Auth\RegisterAuthRequest;
 use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
 
-    public function register(Request $request)
+
+    /**
+     * @var UserRepository
+     */
+    private UserRepository $userRepo;
+
+    public function __construct(UserRepository $repo)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required', 'email', 'unique:users',
-            'password' => 'required'
-        ]);
-       resolve(UserRepository::class)->create($request);
+        $this->userRepo = $repo;
+    }
+
+    public function register(RegisterAuthRequest $request)
+    {
+        $request->safe()->all();
+        $this->userRepo->create($request->name , $request->email , $request->password);
 
         return response()->json([
             'message' => 'user create successfully'
@@ -29,19 +35,16 @@ class AuthController extends Controller
     }
 
 
-    public function login(Request $request)
+    public function login(LoginAuthRequest $request)
     {
-        $request->validate([
-            'email' => 'required', 'email', 'unique:users',
-            'password' => 'required'
-        ]);
-
+        $request->safe()->all();
         if (Auth::attempt($request->only(['email', 'password']))) {
             return response()->json(Auth::User(), 200);
         }
 
         throw ValidationException::withMessages([
             'email' => 'incorrect credentials'
+
         ]);
     }
 
@@ -56,7 +59,7 @@ class AuthController extends Controller
 
     public function user()
     {
-        return response()->json(Auth::User() , Response::HTTP_OK);
+        return response()->json(Auth::User(), Response::HTTP_OK);
     }
 
 

@@ -1,22 +1,28 @@
 <?php
 
 namespace App\Repositories;
+
+use App\Interfaces\UserRepoInterface;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
-class UserRepository
+class UserRepository implements UserRepoInterface
 {
 
-    /**
-     * @param Request $request
-     */
-    public function create(Request $request): void
+    private \Illuminate\Database\Eloquent\Builder $model;
+
+    public function __construct()
     {
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
+        $this->model = User::query();
+    }
+
+    public function create($name, $email, $password): Model
+    {
+       return $this->model->create([
+           'name'=>$name,
+           'email'=>$email,
+           'password'=>Hash::make($password)
         ]);
     }
 }

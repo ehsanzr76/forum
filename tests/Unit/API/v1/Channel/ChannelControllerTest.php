@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Http\Controllers\API\V01\Channel;
+namespace Tests\Unit\API\v1\Channel;
 
 use App\Http\Controllers\API\V01\Channel\ChannelController;
 use App\Models\Channel;
@@ -51,8 +51,27 @@ class ChannelControllerTest extends TestCase
             'id' =>$channel->id,
             'name'=>'vuejs'
         ]);
-        $response->assertStatus(Response::HTTP_OK);
         $updateChannel = Channel::find($channel->id);
+        $response->assertStatus(Response::HTTP_OK);
         $this->assertEquals('vuejs' ,  $updateChannel->name);
     }
+
+
+
+    public function test_deleting_channel_should_be_validated()
+    {
+        $response = $this->json('DELETE', route('channel.delete'));
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+
+    public function test_delete_channel()
+    {
+        $channel = Channel::factory()->create();
+        $response = $this->json('DELETE' , route('channel.delete') , [
+           'id'=>$channel->id
+        ]);
+        $response->assertStatus(Response::HTTP_OK);
+    }
+
 }

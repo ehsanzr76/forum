@@ -4,35 +4,51 @@
 namespace App\Repositories;
 
 
+use App\Interfaces\ChannelRepoInterface;
 use App\Models\Channel;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Collection;
 
-class ChannelRepository
+class ChannelRepository implements ChannelRepoInterface
 {
 
+    private \Illuminate\Database\Eloquent\Builder $model;
+
+    public function __construct()
+    {
+        $this->model = Channel::query();
+    }
+
+//Query All Channel
     public function getAll(): Collection
     {
-        return Channel::all();
+        return $this->model->get();
     }
 
-
-    public function create($name): void
+//Query Create Channel
+    public function create($name): Model
     {
-        Channel::create([
+        return $this->model->create([
             'name' => $name,
-            'slug' => str::slug($name)
+            'slug' => Str::slug($name)
         ]);
     }
 
-
-    public function getUpdate($id, $name): void
+//Query Update Channel
+    public function getUpdate($id, $name): bool
     {
-        Channel::find($id)->update([
+        return $this->model->find($id)->update([
             'name' => $name,
-            'slug' => str::slug($name)
+            'slug' => Str::slug($name)
         ]);
+    }
+
+//Query Delete Channel
+    public function getDestroy($id): bool
+    {
+        return $this->model->find($id)->delete();
     }
 
 }

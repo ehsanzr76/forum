@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\API\V01\Auth\AuthController;
-use App\Http\Controllers\API\V01\Channel\ChannelController;
+use App\Http\Controllers\API\v1\Auth\AuthController;
+use App\Http\Controllers\API\v1\Channel\ChannelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +32,7 @@ Route::prefix('/v1')->group(function () {
         Route::get('/index', 'getAllChannels')->name('channel.index');
         Route::post('/create', 'createNewChannel')->name('channel.create');
         Route::put('/update', 'updateChannel')->name('channel.update');
+        Route::delete('/delete', 'deleteChannel')->name('channel.delete');
     });
 });
 
