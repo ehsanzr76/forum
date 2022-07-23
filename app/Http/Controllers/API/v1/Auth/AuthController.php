@@ -27,7 +27,9 @@ class AuthController extends Controller
     public function register(RegisterAuthRequest $request)
     {
         $request->safe()->all();
-        $this->userRepo->create($request->name , $request->email , $request->password);
+        $user = $this->userRepo->create($request->name, $request->email, $request->password);
+        $defaultSuperAdminEmail = config('permission.default_super_admin_email');
+        $user->email === $defaultSuperAdminEmail ? $user->assignRole('Super_Admin') : $user->assignRole('User');
 
         return response()->json([
             'message' => 'user create successfully'

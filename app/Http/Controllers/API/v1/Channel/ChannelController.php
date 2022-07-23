@@ -30,6 +30,7 @@ class ChannelController extends Controller
 
 
 //GetAllChannel
+
     /**
      * @return JsonResponse
      */
@@ -42,6 +43,7 @@ class ChannelController extends Controller
 
 
 //CreateChannel
+
     /**
      * @param CreateChannelRequest $request
      * @return JsonResponse
@@ -61,6 +63,7 @@ class ChannelController extends Controller
 
 
 //UpdateChannel
+
     /**
      * @param UpdateChannelRequest $request
      * @return JsonResponse
@@ -68,7 +71,7 @@ class ChannelController extends Controller
     public function updateChannel(UpdateChannelRequest $request): JsonResponse
     {
         $request->safe()->all();
-       $this->channelRepo->getUpdate($request->id , $request->name);
+        $this->channelRepo->getUpdate($request->id, $request->name);
 
         return response()->json([
             'message' => 'channel updated successfully'
@@ -78,6 +81,7 @@ class ChannelController extends Controller
 
 
 //DeleteChannel
+
     /**
      * @param DeleteChannelRequest $request
      * @return JsonResponse

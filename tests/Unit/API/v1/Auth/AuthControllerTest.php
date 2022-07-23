@@ -11,6 +11,7 @@ use Tests\TestCase;
 class AuthControllerTest extends TestCase
 {
     use RefreshDatabase;
+    protected $seed = true;
 
 
     public function test_register_user_should_be_validate()

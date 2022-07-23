@@ -158,4 +158,19 @@ return [
 
         'store' => 'default',
     ],
+
+    'default_super_admin_email' => 'ehsanzr538@gmail.com',
+
+    'default_roles' => [
+        'Super_Admin',
+        'User'
+    ],
+
+    'default_permissions' => [
+        'user_management',
+        'channel_management',
+        'thread_management',
+        'answer_management',
+        'subscribe_management'
+    ],
 ];

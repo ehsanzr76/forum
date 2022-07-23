@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\API\v1\Auth\AuthController;
 use App\Http\Controllers\API\v1\Channel\ChannelController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::prefix('/v1')->group(function () {
+
+    ////user
     Route::prefix('/auth')->controller(AuthController::class)->group(function () {
         Route::post('/register', 'register')->name('auth.register');
         Route::post('/login', 'login')->name('auth.login');
@@ -28,11 +29,14 @@ Route::prefix('/v1')->group(function () {
         Route::get('/user', 'user')->name('auth.user');
     });
 
-    Route::prefix('/channel')->controller(ChannelController::class)->group(function () {
+    ///channel
+    Route::prefix('/channel')->controller(ChannelController::class)->group(function () {  ///because all channels every one can seen
         Route::get('/index', 'getAllChannels')->name('channel.index');
-        Route::post('/create', 'createNewChannel')->name('channel.create');
-        Route::put('/update', 'updateChannel')->name('channel.update');
-        Route::delete('/delete', 'deleteChannel')->name('channel.delete');
+        Route::group(['middleware' => ['permission:channel_management']], function () {
+            Route::post('/create', 'createNewChannel')->name('channel.create');
+            Route::put('/update', 'updateChannel')->name('channel.update');
+            Route::delete('/delete', 'deleteChannel')->name('channel.delete');
+        });
     });
 });
 
