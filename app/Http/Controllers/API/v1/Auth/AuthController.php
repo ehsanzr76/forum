@@ -41,7 +41,7 @@ class AuthController extends Controller
     {
         $request->safe()->all();
         if (Auth::attempt($request->only(['email', 'password']))) {
-            return response()->json(Auth::User(), 200);
+            return response()->json(Auth::User(), Response::HTTP_OK);
         }
 
         throw ValidationException::withMessages([

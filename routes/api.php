@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\v1\Auth\AuthController;
 use App\Http\Controllers\API\v1\Channel\ChannelController;
+use App\Http\Controllers\API\v1\Thread\ThreadController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,11 +33,14 @@ Route::prefix('/v1')->group(function () {
     ///channel
     Route::prefix('/channel')->controller(ChannelController::class)->group(function () {  ///because all channels every one can seen
         Route::get('/index', 'getAllChannels')->name('channel.index');
-        Route::group(['middleware' => ['permission:channel_management']], function () {
+        Route::group(['middleware' => ['permission:channel_management', 'auth:sanctum']], function () {     //just users authenticate can channel management
             Route::post('/create', 'createNewChannel')->name('channel.create');
             Route::put('/update', 'updateChannel')->name('channel.update');
             Route::delete('/delete', 'deleteChannel')->name('channel.delete');
         });
     });
+
+    ////thread
+    Route::Resource('threads' , ThreadController::class);
 });
 

@@ -17,13 +17,13 @@ class CreateThreadsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->text('content');
+            $table->text('body');
             $table->boolean('flag')->default(1);
 
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('channel_id')->constrained()->onDelete('cascade');
             //best answer id
-            $table->unsignedBigInteger('best_answer_id');
+//            $table->unsignedBigInteger('best_answer_id');
 
             $table->timestamps();
         });

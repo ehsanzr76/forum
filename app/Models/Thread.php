@@ -12,6 +12,8 @@ class Thread extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'body', 'slug', 'channel_id' , 'user_id'];
+
     public function channel(): BelongsTo
     {
         return $this->belongsTo(Channel::class);

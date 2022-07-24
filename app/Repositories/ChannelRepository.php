@@ -7,7 +7,6 @@ namespace App\Repositories;
 use App\Interfaces\ChannelRepoInterface;
 use App\Models\Channel;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Collection;
 
