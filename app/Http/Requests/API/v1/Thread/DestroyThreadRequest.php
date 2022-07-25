@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\v1\Thread;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateThreadRequest extends FormRequest
+class DestroyThreadRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,7 @@ class UpdateThreadRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required',
-            'body'=>'required',
-            'channel_id'=>'required',
-            'best_answer_id'=>'nullable'
+            'id' => 'required'
         ];
     }
 }

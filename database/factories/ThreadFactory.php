@@ -21,11 +21,12 @@ class ThreadFactory extends Factory
     public function definition()
     {
         return [
-            'title'=>$this->faker->sentence(4),
-            'slug'=>Str::slug('title'),
-            'body'=>$this->faker->realText(),
-            'user_id'=>User::factory()->create()->id,
-            'channel_id'=>Channel::factory()->create()->id,
-        ];
+            'title' => $this->faker->sentence(4),
+            'slug' => Str::slug('title'),
+            'body' => $this->faker->realText(),
+            'user_id' => User::factory()->create()->id,
+            'channel_id' => Channel::factory()->create()->id,
+            'best_answer_id' =>$this->faker->randomNumber(100 || null)
+            ];
     }
 }

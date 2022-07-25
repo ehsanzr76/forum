@@ -47,14 +47,28 @@ class ThreadRepository implements ThreadRepoInterface
     }
 
 
-    public function update($id ,$title, $body): bool
+    public function update($id, $title, $body, $best_answer_id = null): bool
     {
         return $this->model->update([
             'title' => $title,
             'slug' => Str::slug($title),
             'body' => $body,
             'channel_id' => Thread::factory()->create()->id,
+            'best_answer_id' => $best_answer_id,
         ]);
     }
+
+
+    public function user($id): Model
+    {
+        return $this->model->find($id);
+    }
+
+
+    public function destroy($id): bool
+    {
+        return $this->model->find($id)->delete();
+    }
+
 
 }

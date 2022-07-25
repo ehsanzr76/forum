@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\API\v1\Thread;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\v1\Channel\CreateChannelRequest;
 use App\Http\Requests\API\v1\Thread\CreateThreadRequest;
+use App\Http\Requests\API\v1\Thread\DestroyThreadRequest;
 use App\Http\Requests\API\v1\Thread\UpdateThreadRequest;
 use App\Models\Thread;
 use App\Repositories\ThreadRepository;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Gate;
 
 class ThreadController extends Controller
 {
@@ -63,21 +62,35 @@ class ThreadController extends Controller
     public function update(UpdateThreadRequest $request): JsonResponse
     {
         $request->safe()->all();
-        $this->threadRepo->update($request->id, $request->title, $request->body);
+        if (Gate::forUser(auth()->user())->allows('update-thread-user', $this->threadRepo->user($request->user_id))) {
+            $this->threadRepo->update($request->id, $request->title, $request->body, $request->best_answer_id);
+            return response()->json([
+                'message' => 'thread updated successfully',
+            ], Response::HTTP_OK);
+        }
         return response()->json([
-            'message' => 'thread updated successfully',
-        ], Response::HTTP_OK);
+            'message' => 'access denied',
+        ], Response::HTTP_FORBIDDEN);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return Response
+     * @param DestroyThreadRequest $request
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(DestroyThreadRequest $request): JsonResponse
     {
-        //
+        $request->safe()->all();
+        if (Gate::forUser(auth()->user())->allows('update-thread-user', $this->threadRepo->user($request->user_id))) {
+            $this->threadRepo->destroy($request->id);
+            return response()->json([
+                'message' => 'thread deleted successfully'
+            ], Response::HTTP_OK);
+        }
+        return response()->json([
+            'message' => 'access denied',
+        ], Response::HTTP_FORBIDDEN);
     }
 
 
