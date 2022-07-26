@@ -19,7 +19,7 @@ class ThreadTest extends TestCase
 
     public function test_threads_should_be_accessible()
     {
-        $response = $this->get(route('threads.index'));
+        $response = $this->getJson(route('threads.index'));
         $response->assertStatus(Response::HTTP_OK);
     }
 

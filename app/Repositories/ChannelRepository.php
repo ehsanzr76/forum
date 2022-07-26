@@ -21,7 +21,7 @@ class ChannelRepository implements ChannelRepoInterface
     }
 
 //Query All Channel
-    public function getAll(): Collection
+    public function index(): Collection
     {
         return $this->model->get();
     }
@@ -36,7 +36,7 @@ class ChannelRepository implements ChannelRepoInterface
     }
 
 //Query Update Channel
-    public function getUpdate($id, $name): bool
+    public function update($id, $name): bool
     {
         return $this->model->find($id)->update([
             'name' => $name,
@@ -45,7 +45,7 @@ class ChannelRepository implements ChannelRepoInterface
     }
 
 //Query Delete Channel
-    public function getDestroy($id): bool
+    public function destroy($id): bool
     {
         return $this->model->find($id)->delete();
     }

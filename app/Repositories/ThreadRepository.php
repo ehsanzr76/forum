@@ -23,15 +23,14 @@ class ThreadRepository implements ThreadRepoInterface
 
     public function index(): Collection
     {
-        $threads = $this->model->where('flag', 1)->latest()->get();
-        return $threads;
+        return $this->model->where('flag', 1)->latest()->get();
     }
 
 
-    public function show($slug): Model
+    public function show($slug): Model | null
     {
-        $thread = $this->model->where('slug', $slug)->where('flag', 1)->first();
-        return $thread;
+       return $this->model->where('slug', $slug)->where('flag', 1)->first();
+
     }
 
 

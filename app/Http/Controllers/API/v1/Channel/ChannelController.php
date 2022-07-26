@@ -34,9 +34,9 @@ class ChannelController extends Controller
     /**
      * @return JsonResponse
      */
-    public function getAllChannels(): JsonResponse
+    public function index(): JsonResponse
     {
-        $this->channelRepo->getAll();
+        $this->channelRepo->index();
         return response()->json($this->channelRepo, Response::HTTP_OK);
     }
 
@@ -48,7 +48,7 @@ class ChannelController extends Controller
      * @param CreateChannelRequest $request
      * @return JsonResponse
      */
-    public function createNewChannel(CreateChannelRequest $request): JsonResponse
+    public function create(CreateChannelRequest $request): JsonResponse
     {
         $request->safe()->all();
         $this->channelRepo->create($request->name);
@@ -68,10 +68,10 @@ class ChannelController extends Controller
      * @param UpdateChannelRequest $request
      * @return JsonResponse
      */
-    public function updateChannel(UpdateChannelRequest $request): JsonResponse
+    public function update(UpdateChannelRequest $request): JsonResponse
     {
         $request->safe()->all();
-        $this->channelRepo->getUpdate($request->id, $request->name);
+        $this->channelRepo->update($request->id, $request->name);
 
         return response()->json([
             'message' => 'channel updated successfully'
@@ -86,11 +86,11 @@ class ChannelController extends Controller
      * @param DeleteChannelRequest $request
      * @return JsonResponse
      */
-    public function deleteChannel(DeleteChannelRequest $request): JsonResponse
+    public function destroy(DeleteChannelRequest $request): JsonResponse
     {
         $request->safe()->all();
 
-        $this->channelRepo->getDestroy($request->id);
+        $this->channelRepo->destroy($request->id);
         return response()->json([
             'message' => 'channel deleted successfully'
         ], Response::HTTP_OK);

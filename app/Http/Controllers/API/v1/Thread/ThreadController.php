@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\Thread\CreateThreadRequest;
 use App\Http\Requests\API\v1\Thread\DestroyThreadRequest;
 use App\Http\Requests\API\v1\Thread\UpdateThreadRequest;
-use App\Models\Thread;
 use App\Repositories\ThreadRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;

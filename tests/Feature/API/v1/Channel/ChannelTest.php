@@ -4,7 +4,6 @@ namespace Tests\Feature\API\v1\Channel;
 
 use App\Models\Channel;
 use App\Models\User;
-use App\Repositories\ThreadRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Laravel\Sanctum\Sanctum;
@@ -18,7 +17,7 @@ class ChannelTest extends TestCase
 
     public function test_all_channels_should_be_get()
     {
-        $response = $this->get(route('channel.index'));
+        $response = $this->getJson(route('channel.index'));
         $response->assertStatus(Response::HTTP_OK);
     }
 
