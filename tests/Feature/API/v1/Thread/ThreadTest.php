@@ -38,11 +38,11 @@ class ThreadTest extends TestCase
     }
 
 
-    public function test_can_thread_create()
+    public function test_can_create_thread()
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
-        $response = $this->postJson(route('threads.store'), [
+        $response = $this->postJson(route('threads.store' ),[
             'title' => 'faaa',
             'body' => 'saaa',
             'channel_id' => Channel::factory()->create()->id,

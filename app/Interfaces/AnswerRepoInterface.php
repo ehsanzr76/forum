@@ -11,4 +11,6 @@ interface AnswerRepoInterface
 {
     public function index(): Collection;
 
+    public function create($body, $thread_id): Model;
+
 }

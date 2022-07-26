@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\API\v1\Thread;
 
 use App\Http\Controllers\Controller;
-use App\Models\Answer;
+use App\Http\Requests\API\v1\Answer\CreateAnswerRequest;
 use App\Repositories\AnswerRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,15 +21,19 @@ class AnswerController extends Controller
         $this->answerRepo = $repo;
     }
 
-    public function index()
+    public function index(): JsonResponse
     {
         $this->answerRepo->index();
-        return response()->json($this->answerRepo , Response::HTTP_OK);
+        return response()->json($this->answerRepo, Response::HTTP_OK);
     }
 
-    public function store(Request $request)
+    public function store(CreateAnswerRequest $request): JsonResponse
     {
-        //
+        $request->safe()->all();
+        $this->answerRepo->create($request->body , $request->thread_id);
+        return response()->json([
+            'message' => 'answer created successfully'
+        ], Response::HTTP_CREATED);
     }
 
 
