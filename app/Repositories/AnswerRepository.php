@@ -26,10 +26,28 @@ class AnswerRepository implements AnswerRepoInterface
 
     public function create($body , $thread_id): Model
     {
-        return Thread::find($thread_id)->answers()->create([
+        return $this->model->create([
             'body' => $body,
-            'user_id' => auth()->user()->id,
+            'thread_id'=>Thread::query()->find($thread_id)->isRelation('answers'),
+            'user_id' => auth()->id(),
         ]);
+    }
+
+    public function update($body): int
+    {
+        return $this->model->update([
+           'body'=>$body,
+        ]);
+    }
+
+    public function destroy($id): bool
+    {
+        return $this->model->find($id)->delete();
+    }
+
+    public function user($user_id): Model
+    {
+        return $this->model->find($user_id);
     }
 
 }

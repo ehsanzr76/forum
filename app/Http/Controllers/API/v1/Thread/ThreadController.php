@@ -61,7 +61,7 @@ class ThreadController extends Controller
     public function update(UpdateThreadRequest $request): JsonResponse
     {
         $request->safe()->all();
-        if (Gate::forUser(auth()->user())->allows('update-thread-user', $this->threadRepo->user($request->user_id))) {
+        if (Gate::forUser(auth()->user())->allows('update&delete-thread-user', $this->threadRepo->user($request->user_id))) {
             $this->threadRepo->update($request->id, $request->title, $request->body, $request->best_answer_id);
             return response()->json([
                 'message' => 'thread updated successfully',
@@ -81,7 +81,7 @@ class ThreadController extends Controller
     public function destroy(DestroyThreadRequest $request): JsonResponse
     {
         $request->safe()->all();
-        if (Gate::forUser(auth()->user())->allows('update-thread-user', $this->threadRepo->user($request->user_id))) {
+        if (Gate::forUser(auth()->user())->allows('update&delete-thread-user', $this->threadRepo->user($request->user_id))) {
             $this->threadRepo->destroy($request->id);
             return response()->json([
                 'message' => 'thread deleted successfully'
