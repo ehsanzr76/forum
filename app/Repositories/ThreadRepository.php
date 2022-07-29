@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 
 use App\Interfaces\ThreadRepoInterface;
+use App\Models\Channel;
 use App\Models\Thread;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -40,25 +41,25 @@ class ThreadRepository implements ThreadRepoInterface
             'title' => $title,
             'slug' => Str::slug($title),
             'body' => $body,
-            'channel_id' => Thread::factory()->create()->id,
+            'channel_id' => Channel::factory()->create()->id,
             'user_id' => auth()->user()->id,
         ]);
     }
 
 
-    public function update($id, $title, $body, $best_answer_id = null): bool
+    public function update($title, $body, $best_answer_id = null): bool
     {
         return $this->model->update([
             'title' => $title,
             'slug' => Str::slug($title),
             'body' => $body,
-            'channel_id' => Thread::factory()->create()->id,
+            'channel_id' => Channel::factory()->create()->id,
             'best_answer_id' => $best_answer_id,
         ]);
     }
 
 
-    public function user($id): Model
+    public function user($id): Model | null
     {
         return $this->model->find($id);
     }

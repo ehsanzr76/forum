@@ -50,13 +50,14 @@ class AnswerTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    public function test_can_update_thread()
+    public function test_can_update_answer()
     {
+        $this->withoutExceptionHandling();
         $user = User::factory()->create();
         Sanctum::actingAs($user);
         $answer = Answer::factory()->create([
             'body' => 'foo',
-            'thread_id' => 1,
+            'thread_id' => Thread::factory()->create()->id,
             'user_id' => $user->id,
 
 

@@ -51,7 +51,7 @@ class ThreadController extends Controller
     public function store(CreateThreadRequest $request): JsonResponse
     {
         $request->safe()->all();
-        $this->threadRepo->create($request->title, $request->body);
+        $this->threadRepo->create($request->input('title'), $request->input('body'));
         return response()->json([
             'message' => 'thread created created successfully',
         ], Response::HTTP_CREATED);
@@ -61,16 +61,19 @@ class ThreadController extends Controller
     public function update(UpdateThreadRequest $request): JsonResponse
     {
         $request->safe()->all();
-        if (Gate::forUser(auth()->user())->allows('update&delete-thread-user', $this->threadRepo->user($request->user_id))) {
-            $this->threadRepo->update($request->id, $request->title, $request->body, $request->best_answer_id);
+        if (Gate::forUser(auth()->user())->allows('update&delete-thread-user', $this->threadRepo->user($request->input('id')))){
+            $this->threadRepo->update($request->input('title'), $request->input('body'), $request->input('best_answer_id'));
             return response()->json([
                 'message' => 'thread updated successfully',
             ], Response::HTTP_OK);
         }
+
         return response()->json([
             'message' => 'access denied',
         ], Response::HTTP_FORBIDDEN);
+
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -81,8 +84,8 @@ class ThreadController extends Controller
     public function destroy(DestroyThreadRequest $request): JsonResponse
     {
         $request->safe()->all();
-        if (Gate::forUser(auth()->user())->allows('update&delete-thread-user', $this->threadRepo->user($request->user_id))) {
-            $this->threadRepo->destroy($request->id);
+        if (Gate::forUser(auth()->user())->allows('update&delete-thread-user', $this->threadRepo->user($request->input('id')))) {
+            $this->threadRepo->destroy($request->input('id'));
             return response()->json([
                 'message' => 'thread deleted successfully'
             ], Response::HTTP_OK);

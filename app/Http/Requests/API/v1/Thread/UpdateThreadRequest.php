@@ -26,8 +26,7 @@ class UpdateThreadRequest extends FormRequest
         return [
             'title'=>'required',
             'body'=>'required',
-            'channel_id'=>'required',
-            'best_answer_id'=>'nullable'
+            'channel_id'=>'required'
         ];
     }
 }

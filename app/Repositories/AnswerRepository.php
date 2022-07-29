@@ -45,7 +45,7 @@ class AnswerRepository implements AnswerRepoInterface
         return $this->model->find($id)->delete();
     }
 
-    public function user($user_id): Model
+    public function user($user_id): Model | null
     {
         return $this->model->find($user_id);
     }

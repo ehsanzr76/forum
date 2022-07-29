@@ -49,8 +49,8 @@ class AnswerController extends Controller
     public function update(UpdateAnswerRequest $request): JsonResponse
     {
         $request->safe()->all();
-        if (Gate::forUser(auth()->user())->allows('update&delete-answer-user', $this->answerRepo->user($request->user_id))){
-            $this->answerRepo->update($request->body);
+        if (Gate::forUser(auth()->user())->allows('update&delete-answer-user', $this->answerRepo->user($request->input('user_id')))){
+            $this->answerRepo->update($request->input('body'));
             return response()->json([
                 'message' => 'answer updated successfully'
             ], Response::HTTP_OK);
@@ -65,9 +65,9 @@ class AnswerController extends Controller
     public function destroy(DestroyAnswerRequest $request): JsonResponse
     {
         $request->safe()->all();
-        if (Gate::forUser(auth()->user())->allows('update&delete-answer-user', $this->answerRepo->user($request->user_id))){
-            $this->answerRepo->destroy($request->id);
-            return \response()->json([
+        if (Gate::forUser(auth()->user())->allows('update&delete-answer-user', $this->answerRepo->user($request->input('user_id')))){
+            $this->answerRepo->destroy($request->input('id'));
+            return response()->json([
                 'message'=>'answer deleted successfully'
             ] , Response::HTTP_OK);
         }
