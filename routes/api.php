@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\v1\Auth\AuthController;
 use App\Http\Controllers\API\v1\Channel\ChannelController;
 use App\Http\Controllers\API\v1\Thread\AnswerController;
+use App\Http\Controllers\API\v1\Thread\SubscribeController;
 use App\Http\Controllers\API\v1\Thread\ThreadController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,10 +22,10 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::prefix('/v1')->group(function () {
+Route::prefix('v1')->group(function () {
 
     ////user
-    Route::prefix('/auth')->controller(AuthController::class)->group(function () {
+    Route::prefix('auth')->controller(AuthController::class)->group(function () {
         Route::post('/register', 'register')->name('auth.register');
         Route::post('/login', 'login')->name('auth.login');
         Route::post('/logout', 'logout')->name('auth.logout');
@@ -33,7 +34,7 @@ Route::prefix('/v1')->group(function () {
 
 
     ///channel
-    Route::prefix('/channel')->controller(ChannelController::class)->group(function () {  ///because all channels every one can seen
+    Route::prefix('channel')->controller(ChannelController::class)->group(function () {  ///because all channels every one can seen
         Route::get('/index', 'index')->name('channel.index');
         Route::group(['middleware' => ['permission:channel_management', 'auth:sanctum']], function () {     //just users authenticate can channel management
             Route::post('/create', 'create')->name('channel.create');
@@ -44,12 +45,15 @@ Route::prefix('/v1')->group(function () {
 
 
     ////thread
-    Route::Resource('threads' , ThreadController::class);
+    Route::Resource('threads', ThreadController::class);
 
 
     ////answer
-    Route::prefix('/threads')->group(function (){
-        Route::Resource('answers' , AnswerController::class);
-    });
+    Route::prefix('/threads')->resource('answers', AnswerController::class);
+
+
+    ////subscribe
+    Route::prefix('/threads')->resource('subscribes', SubscribeController::class);
+
 });
 

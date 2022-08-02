@@ -24,7 +24,9 @@ class UpdateAnswerRequest extends FormRequest
     public function rules()
     {
         return [
-           'body'=>'required'
+            'id'=>'required',
+            'user_id' => 'required',
+            'body' => 'required'
         ];
     }
 }

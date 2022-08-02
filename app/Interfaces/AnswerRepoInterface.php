@@ -14,6 +14,6 @@ interface AnswerRepoInterface
     public function create($body, $thread_id): Model;
     public function update($body): int;
     public function destroy($id): bool;
-    public function user($user_id): Model | null;
+    public function user($id): Model;
 
 }

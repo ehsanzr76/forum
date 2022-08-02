@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\API\v1\Answer;
+namespace App\Http\Requests\API\v1\Subscribe;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DestroyAnswerRequest extends FormRequest
+class UnSubscribeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,8 @@ class DestroyAnswerRequest extends FormRequest
     {
         return [
             'id'=>'required',
-           'user_id'=>'required'
+            'user_id'=>'required',
+            'thread_id'=>'required'
         ];
     }
 }
