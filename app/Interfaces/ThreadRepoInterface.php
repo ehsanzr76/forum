@@ -15,5 +15,6 @@ interface ThreadRepoInterface
     public function update($title , $body , $best_answer_id = null): bool;
     public function destroy($id): bool;
     public function user($id): Model | Collection;
+    public function find($thread_id): Model;
 
 }

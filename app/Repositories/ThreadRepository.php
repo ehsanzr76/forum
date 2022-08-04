@@ -71,4 +71,10 @@ class ThreadRepository implements ThreadRepoInterface
     }
 
 
+    public function find($thread_id): Model
+    {
+        return $this->model->getModel()->find($thread_id);
+    }
+
+
 }

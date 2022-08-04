@@ -45,6 +45,6 @@ class NotificationService
      */
     public function notifyUserForNewReply($thread_id): NewReplySubmitted
     {
-        return new NewReplySubmitted();
+        return new NewReplySubmitted($this->threadRepo->find($thread_id));
     }
 }

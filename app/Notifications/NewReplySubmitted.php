@@ -10,16 +10,14 @@ class NewReplySubmitted extends Notification
 {
     use Queueable;
 
-    private \Illuminate\Database\Eloquent\Builder $thread;
-
     /**
-     * Create a new notification instance.
-     *
-     * @return void
+     * @var Thread
      */
-    public function __construct()
+    private Thread $thread;
+
+    public function __construct(Thread $thread)
     {
-        $this->thread = Thread::query();
+        $this->thread = $thread;
     }
 
     /**
@@ -39,7 +37,7 @@ class NewReplySubmitted extends Notification
     {
         return [
             'thread_title' => $this->thread->title,
-            'url' => route('threads.show', $this->thread->id),
+            'url' => route('threads.show', [$this->thread]),
             'time' => now()->format('y-m-d H:i:s'),
         ];
     }
