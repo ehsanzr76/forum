@@ -85,4 +85,18 @@ class AnswerTest extends TestCase
         ])->assertSuccessful();
         $this->assertFalse(Thread::find($answer->thread_id)->answers()->where('body', $answer->body)->exists());   ////when answer is deleted the thread_id in threads table should be deleted.
     }
+
+
+    public function test_user_score_will_increase_by_submit_new_answer()
+    {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $response = $this->postJson(route('answers.store'), [
+            'body' => 'this thread is very good',
+            'thread_id' => Thread::factory()->create()->id,
+        ]);
+        $response->assertSuccessful();
+        $this->assertEquals(10 , $user->score);
+    }
+
 }

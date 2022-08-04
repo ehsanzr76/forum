@@ -15,5 +15,6 @@ interface AnswerRepoInterface
     public function update($body): int;
     public function destroy($id): bool;
     public function user($id): Model;
+    public function score($thread_id);
 
 }

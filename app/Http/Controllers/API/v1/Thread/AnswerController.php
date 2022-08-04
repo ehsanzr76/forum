@@ -28,7 +28,7 @@ class AnswerController extends Controller
      */
     private SubscribeRepository $subscribeRepo;
 
-    public function __construct(AnswerRepository $repo , SubscribeRepository $repository)
+    public function __construct(AnswerRepository $repo, SubscribeRepository $repository)
     {
         $this->answerRepo = $repo;
         $this->subscribeRepo = $repository;
@@ -40,7 +40,7 @@ class AnswerController extends Controller
         return response()->json($this->answerRepo, Response::HTTP_OK);
     }
 
-    public function store(CreateAnswerRequest $request , NotificationService $service): JsonResponse
+    public function store(CreateAnswerRequest $request, NotificationService $service): JsonResponse
     {
         $request->safe()->all();
         $this->answerRepo->create($request->body, $request->thread_id);
@@ -48,6 +48,7 @@ class AnswerController extends Controller
             $service->getUserInstance($request->thread_id),
             $service->notifyUserForNewReply($request->thread_id)
         );
+        $this->answerRepo->score($request->thread_id);
         return response()->json([
             'message' => 'answer created successfully'
         ], Response::HTTP_CREATED);

@@ -24,11 +24,11 @@ class AnswerRepository implements AnswerRepoInterface
         return $this->model->latest()->get();
     }
 
-    public function create($body , $thread_id): Model
+    public function create($body, $thread_id): Model
     {
         return $this->model->create([
             'body' => $body,
-            'thread_id'=>Thread::query()->find($thread_id)->isRelation('answers'),
+            'thread_id' => Thread::query()->find($thread_id)->isRelation('answers'),
             'user_id' => auth()->id(),
         ]);
     }
@@ -36,7 +36,7 @@ class AnswerRepository implements AnswerRepoInterface
     public function update($body): int
     {
         return $this->model->update([
-           'body'=>$body,
+            'body' => $body,
         ]);
     }
 
@@ -48,6 +48,13 @@ class AnswerRepository implements AnswerRepoInterface
     public function user($id): Model
     {
         return $this->model->find($id);
+    }
+
+    public function score($thread_id)
+    {
+        if (Thread::query()->find($thread_id)) {
+            auth()->user()->increment('score', 10);
+        }
     }
 
 }
