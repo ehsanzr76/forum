@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use \Illuminate\Database\Eloquent\Collection;
+use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class UserRepository implements UserRepoInterface
 {
@@ -16,6 +17,11 @@ class UserRepository implements UserRepoInterface
     public function __construct()
     {
         $this->model = User::query();
+    }
+
+    public function index(): LengthAwarePaginator
+    {
+        return $this->model->orderByDesc('score')->paginate(10);
     }
 
     public function create($name, $email, $password): Model
