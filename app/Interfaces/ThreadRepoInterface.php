@@ -14,6 +14,6 @@ interface ThreadRepoInterface
     public function create($title , $body): Model;
     public function update($title , $body , $best_answer_id = null): bool;
     public function destroy($id): bool;
-    public function user($id): Model | null;
+    public function user($id): Model | Collection;
 
 }

@@ -59,7 +59,7 @@ class ThreadRepository implements ThreadRepoInterface
     }
 
 
-    public function user($id): Model | null
+    public function user($id): Model | Collection
     {
         return $this->model->find($id);
     }

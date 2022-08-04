@@ -33,4 +33,9 @@ class SubscribeRepository implements SubscribeRepoInterface
             ['user_id' , auth()->id()]
         ])->delete();
     }
+
+    public function notifiableUser($thread_id): array
+    {
+        return $this->model->where('thread_id' , $thread_id)->pluck('user_id')->all();
+    }
 }

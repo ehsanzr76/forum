@@ -6,6 +6,7 @@ use App\Interfaces\UserRepoInterface;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use \Illuminate\Database\Eloquent\Collection;
 
 class UserRepository implements UserRepoInterface
 {
@@ -24,6 +25,11 @@ class UserRepository implements UserRepoInterface
            'email'=>$email,
            'password'=>Hash::make($password)
         ]);
+    }
+
+    public function find($id): Model | Collection
+    {
+        return $this->model->find($id);
     }
 
 }
