@@ -23,15 +23,11 @@ class AnswerController extends Controller
      * @var AnswerRepository
      */
     private AnswerRepository $answerRepo;
-    /**
-     * @var SubscribeRepository
-     */
-    private SubscribeRepository $subscribeRepo;
 
-    public function __construct(AnswerRepository $repo, SubscribeRepository $repository)
+    public function __construct(AnswerRepository $repo)
     {
         $this->answerRepo = $repo;
-        $this->subscribeRepo = $repository;
+        $this->middleware(['user-block'])->except(['index']);
     }
 
     public function index(): JsonResponse

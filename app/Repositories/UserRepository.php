@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\UserRepoInterface;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use \Illuminate\Database\Eloquent\Collection;
 use \Illuminate\Contracts\Pagination\LengthAwarePaginator;

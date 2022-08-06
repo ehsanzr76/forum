@@ -7,6 +7,7 @@ use App\Http\Requests\API\v1\Thread\CreateThreadRequest;
 use App\Http\Requests\API\v1\Thread\DestroyThreadRequest;
 use App\Http\Requests\API\v1\Thread\UpdateThreadRequest;
 use App\Repositories\ThreadRepository;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -22,7 +23,9 @@ class ThreadController extends Controller
     public function __construct(ThreadRepository $repo)
     {
         $this->threadRepo = $repo;
+        $this->middleware(['user-block'])->except(['index' , 'show']);
     }
+
 
     /**
      * Display a listing of the resource.

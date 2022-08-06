@@ -19,7 +19,9 @@ class SubscribeController extends Controller
     public function __construct(SubscribeRepository $repo)
     {
         $this->subscribeRepo = $repo;
+        $this->middleware(['user-block']);
     }
+
 
     public function store(SubscribeRequest $request): JsonResponse
     {
