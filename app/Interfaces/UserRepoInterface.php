@@ -15,5 +15,6 @@ interface UserRepoInterface
     public function find($id): Model|Collection;
 
     public function index(): LengthAwarePaginator;
+    public function userBlock(): bool;
 
 }

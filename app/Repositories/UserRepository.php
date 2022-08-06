@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use \Illuminate\Database\Eloquent\Collection;
 use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use phpDocumentor\Reflection\DocBlock\Tags\Author;
 
 class UserRepository implements UserRepoInterface
 {
@@ -37,6 +38,11 @@ class UserRepository implements UserRepoInterface
     public function find($id): Model | Collection
     {
         return $this->model->find($id);
+    }
+
+    public function userBlock(): bool
+    {
+        return (bool) auth()->user()->is_block;
     }
 
 }
